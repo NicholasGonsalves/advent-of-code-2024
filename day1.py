@@ -8,8 +8,7 @@ def part1():
         lines = f.readlines()
     
     # Build heaps
-    lheap = []
-    rheap = []
+    lheap, rheap = [], []
     for line in lines:
         l, r = line.split("   ", 1)
         heapq.heappush(lheap, int(l))
