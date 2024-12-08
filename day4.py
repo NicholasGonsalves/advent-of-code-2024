@@ -44,7 +44,46 @@ def part1(word: str):
     return search(lines, word)
 
 
-def part2(): ...
+def search_x_mas(grid: List[List[int]]) -> int:
+
+    def is_x_mas(i: int, j: int) -> int:
+
+        if not (
+            (grid[i - 1][j - 1] == "M"
+            and grid[i + 1][j + 1] == "S")
+            or (grid[i - 1][j - 1] == "S"
+            and grid[i + 1][j + 1] == "M")
+        ):
+            return 0
+
+        if not (
+            (grid[i - 1][j + 1] == "M"
+            and grid[i + 1][j - 1] == "S")
+            or (grid[i - 1][j + 1] == "S"
+            and grid[i + 1][j - 1] == "M")
+        ):
+            return 0
+
+        return 1
+
+    total = 0
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if (
+                grid[i][j] == "A"
+                and 1 <= i < len(grid) - 1
+                and 1 <= j < len(grid[0]) - 1
+            ):
+                total += is_x_mas(i, j)
+
+    return total
+
+
+def part2():
+    # Search for 'A' and then check the diags
+    with open("day4.txt", "r") as f:
+        lines = f.read().splitlines()
+    return search_x_mas(lines)
 
 
 if __name__ == "__main__":
