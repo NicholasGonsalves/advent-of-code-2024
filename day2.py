@@ -11,9 +11,9 @@ def is_safe(levels: List[int]) -> bool:
 
 
 def part1():
-    with open("day2.txt","r") as f:
+    with open("day2.txt", "r") as f:
         lines = f.readlines()
-    
+
     total = 0
     for line in lines:
         levels = [int(level) for level in line.split(" ")]
@@ -22,9 +22,9 @@ def part1():
 
 
 def part2():
-    with open("day2.txt","r") as f:
+    with open("day2.txt", "r") as f:
         lines = f.readlines()
-    
+
     # brute force..
     total = 0
     for line in lines:

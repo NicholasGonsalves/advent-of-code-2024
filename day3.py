@@ -1,4 +1,3 @@
-
 def evaluate(program: str) -> int:
     total = 0
     for possible_expression in program.split("mul("):
@@ -13,16 +12,17 @@ def evaluate(program: str) -> int:
             total += int(l) * int(r)
     return total
 
+
 def part1():
-    with open("day3.txt","r") as f:
+    with open("day3.txt", "r") as f:
         lines = f.read()
     return evaluate(lines)
 
 
 def part2():
-    with open("day3.txt","r") as f:
+    with open("day3.txt", "r") as f:
         lines = f.read()
-    
+
     total = 0
     for do_portion in lines.split("do()"):
         enabled = True
@@ -30,9 +30,9 @@ def part2():
             if enabled:
                 total += evaluate(section)
             enabled = False
-    
+
     return total
-    
+
 
 if __name__ == "__main__":
     print(part1())

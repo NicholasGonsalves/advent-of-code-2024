@@ -4,9 +4,9 @@ import heapq
 
 def part1():
     # Read file
-    with open("day1.txt","r") as f:
+    with open("day1.txt", "r") as f:
         lines = f.readlines()
-    
+
     # Build heaps
     lheap, rheap = [], []
     for line in lines:
@@ -19,16 +19,16 @@ def part1():
     while lheap:
         l_val = heapq.heappop(lheap)
         r_val = heapq.heappop(rheap)
-        total += (abs(l_val - r_val))
+        total += abs(l_val - r_val)
 
     return total
 
 
 def part2():
     # Read file
-    with open("day1.txt","r") as f:
+    with open("day1.txt", "r") as f:
         lines = f.readlines()
-    
+
     counts = defaultdict(int)
     left_values = [0] * len(lines)  # Preallocate list
 
