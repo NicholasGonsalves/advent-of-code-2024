@@ -49,18 +49,14 @@ def search_x_mas(grid: List[List[int]]) -> int:
     def is_x_mas(i: int, j: int) -> int:
 
         if not (
-            (grid[i - 1][j - 1] == "M"
-            and grid[i + 1][j + 1] == "S")
-            or (grid[i - 1][j - 1] == "S"
-            and grid[i + 1][j + 1] == "M")
+            (grid[i - 1][j - 1] == "M" and grid[i + 1][j + 1] == "S")
+            or (grid[i - 1][j - 1] == "S" and grid[i + 1][j + 1] == "M")
         ):
             return 0
 
         if not (
-            (grid[i - 1][j + 1] == "M"
-            and grid[i + 1][j - 1] == "S")
-            or (grid[i - 1][j + 1] == "S"
-            and grid[i + 1][j - 1] == "M")
+            (grid[i - 1][j + 1] == "M" and grid[i + 1][j - 1] == "S")
+            or (grid[i - 1][j + 1] == "S" and grid[i + 1][j - 1] == "M")
         ):
             return 0
 
