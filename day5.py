@@ -18,14 +18,6 @@ def find_middle_page_sum(pages: List[List[int]]) -> int:
     return sum(order[len(order) // 2] for order in pages)
 
 
-def filter_orders_by_validity(
-    rules: Dict[int, List[int]],
-    pages: List[List[int]],
-    valid: bool = True,
-) -> List[List[int]]:
-    return [page for page in pages if filter_order_by_validity(rules, page, valid)]
-
-
 def filter_order_by_validity(
     rules: Dict[int, List[int]], pages: List[int], valid: bool = True
 ) -> bool:
@@ -71,18 +63,12 @@ def correct_order(rules: Dict[int, List[int]], order: List[int]) -> List[int]:
     return toposort(relevant_rules)
 
 
-def correct_ordering(
-    rules: Dict[int, List[int]], orders: List[List[int]]
-) -> List[List[int]]:
-    return [correct_order(rules, order) for order in orders]
-
-
 def part1():
     with open("day5.txt", "r") as f:
         rules, _pages = f.read().split("\n\n", 1)
 
     adj, pages = parse_rules_and_pages(rules, _pages)
-    valid_orders = filter_orders_by_validity(adj, pages, True)
+    valid_orders = [page for page in pages if filter_order_by_validity(adj, page, True)]
     return find_middle_page_sum(valid_orders)
 
 
@@ -91,8 +77,10 @@ def part2():
         rules, _pages = f.read().split("\n\n", 1)
 
     adj, pages = parse_rules_and_pages(rules, _pages)
-    invalid_orders = filter_orders_by_validity(adj, pages, False)
-    corrected_orders = correct_ordering(adj, invalid_orders)
+    invalid_orders = [
+        page for page in pages if filter_order_by_validity(adj, page, False)
+    ]
+    corrected_orders = [correct_order(adj, order) for order in invalid_orders]
     return find_middle_page_sum(corrected_orders)
 
 
