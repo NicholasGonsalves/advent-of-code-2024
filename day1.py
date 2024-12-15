@@ -1,14 +1,13 @@
 from collections import defaultdict
 import heapq
+from typing import Dict, List
 
 
-def part1():
-    # Read file
-    with open("day1.txt", "r") as f:
-        lines = f.readlines()
+def part1(lines: List[str]) -> int:
 
     # Build heaps
-    lheap, rheap = [], []
+    lheap: List[int] = []
+    rheap: List[int] = []
     for line in lines:
         l, r = line.split("   ", 1)
         heapq.heappush(lheap, int(l))
@@ -24,12 +23,9 @@ def part1():
     return total
 
 
-def part2():
-    # Read file
-    with open("day1.txt", "r") as f:
-        lines = f.readlines()
+def part2(lines: List[str]) -> int:
 
-    counts = defaultdict(int)
+    counts: Dict[int, int] = defaultdict(int)
     left_values = [0] * len(lines)  # Preallocate list
 
     for i, line in enumerate(lines):
@@ -46,5 +42,8 @@ def part2():
 
 
 if __name__ == "__main__":
-    print(part1())
-    print(part2())
+    with open("day1.txt", "r") as f:
+        lines = f.readlines()
+
+    print(part1(lines))
+    print(part2(lines))
