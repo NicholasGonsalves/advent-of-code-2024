@@ -16,10 +16,8 @@ def find_locations_for_freq(freq: str, grid: List[List[str]]) -> Set[Tuple[int, 
 
 def find_antinodes(locations: List[Tuple[int, int]]) -> Set[Tuple[int, int]]:
     antinodes: Set[Tuple[int, int]] = set()
-    for (ai, bi) in locations:
-        for (aj, bj) in locations:
-            # if ai == bi and aj == bj:
-            #     continue
+    for ai, bi in locations:
+        for aj, bj in locations:
             diff = (ai - aj, bi - bj)
             antinodes.add((ai + diff[0], bi + diff[1]))
             antinodes.add((ai - diff[0], bi - diff[1]))
@@ -29,17 +27,41 @@ def find_antinodes(locations: List[Tuple[int, int]]) -> Set[Tuple[int, int]]:
 def part1(grid: List[List[str]]) -> int:
     freqs = set(v for row in grid for v in row if v != ".")
     antinodes = set(
-        point 
-        for freq in freqs 
+        point
+        for freq in freqs
         for point in find_antinodes(list(find_locations_for_freq(freq, grid)))
-        if in_bounds(point[0], point[1], grid)
-        and grid[point[0]][point[1]] != freq
+        if in_bounds(point[0], point[1], grid) and grid[point[0]][point[1]] != freq
     )
     return len(antinodes)
 
 
-def part2(lines: List[List[str]]) -> int:
-    return 0
+def find_harmonic_antinodes(locations: List[Tuple[int, int]]) -> Set[Tuple[int, int]]:
+    antinodes: Set[Tuple[int, int]] = set()
+    for ai, bi in locations:
+        for aj, bj in locations:
+            if ai == aj and bj == bj:
+                continue
+            diff = (ai - aj, bi - bj)
+            harmonic = 1
+            while in_bounds(ai + harmonic * diff[0], bi + harmonic * diff[1], grid):
+                antinodes.add((ai + harmonic * diff[0], bi + harmonic * diff[1]))
+                harmonic += 1
+            harmonic = 1
+            while in_bounds(ai - harmonic * diff[0], bi - harmonic * diff[1], grid):
+                antinodes.add((ai - harmonic * diff[0], bi - harmonic * diff[1]))
+                harmonic += 1
+    return antinodes
+
+
+def part2(grid: List[List[str]]) -> int:
+    freqs = set(v for row in grid for v in row if v != ".")
+    antinodes = set(
+        point
+        for freq in freqs
+        for point in find_harmonic_antinodes(list(find_locations_for_freq(freq, grid)))
+        if in_bounds(point[0], point[1], grid)
+    )
+    return len(antinodes)
 
 
 if __name__ == "__main__":
